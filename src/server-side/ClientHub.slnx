@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="Core/ClientHub.Domain/ClientHub.Domain.csproj" />
+    <Project Path="Core/ClientHub.UseCases/ClientHub.UseCases.csproj" />
+  </Folder>
+  <Folder Name="/Infra/">
+    <Project Path="Infra/ClientHub.Caching/ClientHub.Caching.csproj" />
+    <Project Path="Infra/ClientHub.Logging/ClientHub.Logging.csproj" />
+    <Project Path="Infra/ClientHub.Persistense/ClientHub.Persistense.csproj" />
+  </Folder>
+  <Folder Name="/Presenters/">
+    <Project Path="Presenters/ClientHub.WebApi/ClientHub.WebApi.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/ClientHub.Tests/ClientHub.Tests.csproj" />
+  </Folder>
+</Solution>

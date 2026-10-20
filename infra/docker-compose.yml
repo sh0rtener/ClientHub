@@ -1,0 +1,46 @@
+services:
+  gateway:
+    image: gateway-ng
+    hostname: gateway-ng
+    container_name: gateway
+    restart: always
+    build:
+      context: nginx/
+      dockerfile: Dockerfile
+    env_file:
+      - .env.example
+    ports:
+      - 8080:8080
+    
+  clienthub-psql:
+    image: postgres:17
+    container_name: clienthub-psql
+    hostname: clienthub-psql
+    restart: always
+    env_file:
+      - .env.example
+    ports:
+      - 5432:5432
+    
+  clienthub-webapi1:
+    image: clienthub-webapi1
+    hostname: clienthub-webapi1
+    container_name: clienthub-webapi1
+    restart: always
+    build:
+      context: ../
+      dockerfile: src/server-side/Presenters/ClientHub.WebApi/Dockerfile
+    env_file:
+      - .env.example
+    
+  redis:
+    image: redis:8-alpine
+    container_name: autodis-redis
+    restart: unless-stopped
+    env_file:
+      - .env.example
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/data:/data
+    command: redis-server --appendonly yes
