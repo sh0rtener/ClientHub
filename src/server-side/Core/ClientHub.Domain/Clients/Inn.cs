@@ -2,10 +2,13 @@ using System.Text.RegularExpressions;
 
 namespace ClientHub.Domain.Clients.CourtValues;
 
-public sealed class Inn : ValueObject
+public sealed class Inn : DefaultStringValueObject
 {
     private const string _innRegex = @"\A(?:[0-9]{10}|[0-9]{12})\z";
     public string Value { get; }
+
+    public Inn(string value)
+        : base(value) { }
 
     public void Validate(string value)
     {

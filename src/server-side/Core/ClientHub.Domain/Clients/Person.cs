@@ -36,7 +36,7 @@ public sealed class Person : AuditableEntity<Guid>
         ValidateLastname(lastname);
         Lastname = lastname.Trim();
         ValidatePatronymic(patronymic);
-        Patronymic = patronymic?.Trim();
+        Patronymic = patronymic?.Trim() ?? null;
         ValidateBirthdate(birthdate);
         Birthdate = birthdate;
         Guard.ValidateEnum(gender);
@@ -116,7 +116,7 @@ public sealed class Person : AuditableEntity<Guid>
     private void ValidatePatronymic(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new InvalidPropertyException(nameof(value));
+            return;
         if (value.Trim().Length > _maxNameLength)
             throw new InvalidPropertyException(
                 nameof(value),
