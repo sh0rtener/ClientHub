@@ -16,7 +16,7 @@ public sealed class GetAllIndividualEntrepreneursQueryHandler
 {
     private readonly IUseCaseIndividualEntrepreneursRepository _repository;
 
-    public GetAllIndividualEntrepreneursQueryHandler(
+    public GetAllIndividualEntrepreneursQueryHandler(   
         IUseCaseIndividualEntrepreneursRepository repository
     )
     {

@@ -34,7 +34,12 @@ public sealed class LegalEntity : Client
         IEnumerable<EnforcementProceedings>? proceedings,
         IEnumerable<CourtsOfGeneralJurisdiction>? jurisdictions,
         Okato okatoCode,
-        int headCount
+        int headCount,
+        IEnumerable<FounderClient>? clients,
+        IEnumerable<FounderPerson>? persons,
+        IEnumerable<Beneficiar>? beneficiars,
+        IEnumerable<Maintainer>? maintainers,
+        IEnumerable<Kpp>? kpps
     )
         : base(
             inn,
@@ -58,6 +63,12 @@ public sealed class LegalEntity : Client
         OkatoCode = okatoCode ?? throw new InvalidPropertyException(nameof(okatoCode));
         ValidateHeadCounts(headCount);
         HeadCount = headCount;
+
+        _founderClients = clients?.ToList() ?? [];
+        _founderPersons = persons?.ToList() ?? [];
+        _beneficiars = beneficiars?.ToList() ?? [];
+        _maintainers = maintainers?.ToList() ?? [];
+        _kpps = kpps?.ToList() ?? [];
     }
 
     public Okato OkatoCode { get; private set; }

@@ -731,7 +731,12 @@ public sealed class LegalEntityTests
             null,
             null,
             new Okato("12345678"),
-            headCount
+            headCount,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
     private static FounderPerson CreateFounderPerson(Person? person = null) =>
@@ -816,7 +821,12 @@ public sealed class LegalEntityTests
                 null,
                 null,
                 null!,
-                1
+                1,
+                null,
+                null,
+                null,
+                null,
+                null
             )
         );
     }
@@ -877,7 +887,7 @@ public sealed class LegalEntityTests
             null,
             100m,
             10m,
-            CreateClient()
+            Create()
         );
         entity.AddFounderClients(new[] { founder });
         Assert.Single(entity.FounderClients);

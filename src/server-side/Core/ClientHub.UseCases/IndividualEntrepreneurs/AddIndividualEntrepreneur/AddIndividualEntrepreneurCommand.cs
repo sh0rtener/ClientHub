@@ -33,7 +33,7 @@ public sealed class AddIndividualEntrepreneurCommandHandler
         CancellationToken cancellationToken
     )
     {
-        var individualEntrepreneur = _mapper.Map<IndividualEntrepreneur>(request);
+        var individualEntrepreneur = _mapper.Map<IndividualEntrepreneur>(request.IPs);
 
         if (!await _repository.IsExist(individualEntrepreneur.Inn, cancellationToken))
             throw new InvalidDataException(

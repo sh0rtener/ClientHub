@@ -1,3 +1,5 @@
+using ClientHub.Domain.Clients.CourtValues;
+
 namespace ClientHub.Domain.LegalEntities;
 
 public interface ILegalEntityRepository
@@ -9,6 +11,22 @@ public interface ILegalEntityRepository
     /// <param name="cancellationToken"></param>
     /// <returns>Юридическое Лицо, если существует, иначе null</returns>
     Task<LegalEntity?> Get(int id, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Проверяет, существует ли ЮЛ по переданному идентификатору
+    /// </summary>
+    /// <param name="id">Идентификатор ЮЛ</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>True, если существует, иначе False</returns>
+    Task<bool> IsExist(int id, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Проверяет, существует ли ЮЛ по переданному ИНН
+    /// </summary>
+    /// <param name="inn">ИНН</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>True, если существует, иначе False</returns>
+    Task<bool> IsExist(Inn inn, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Добавление нового юридического лица

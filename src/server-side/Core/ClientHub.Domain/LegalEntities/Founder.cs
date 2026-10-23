@@ -10,7 +10,7 @@ public sealed class FounderClient : LegalEntityLink
         DateTime? disassignedAt,
         decimal incomeShareInDollars,
         decimal incomeShareInPercent,
-        Client client
+        LegalEntity client
     )
         : base(type, assignedAt, disassignedAt, incomeShareInDollars, incomeShareInPercent)
     {
@@ -18,7 +18,7 @@ public sealed class FounderClient : LegalEntityLink
         Client = client;
     }
 
-    public Client Client { get; private set; }
+    public LegalEntity Client { get; private set; }
 }
 
 public sealed class FounderPerson : LegalEntityLink
