@@ -18,4 +18,27 @@ public sealed class ClientStatus : ValueObject
     {
         yield return Identifier;
     }
+
+    public static ClientStatus DefineStatus(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                return ClientStatus.Active;
+                break;
+            case 2:
+                return ClientStatus.PendingTermination;
+                break;
+            case 3:
+                return ClientStatus.Terminated;
+                break;
+            case 4:
+                return ClientStatus.PendingRegistration;
+                break;
+            default:
+                throw new InvalidDataException(
+                    "По заданным параметрам не удалось определить статус клиента"
+                );
+        }
+    }
 }

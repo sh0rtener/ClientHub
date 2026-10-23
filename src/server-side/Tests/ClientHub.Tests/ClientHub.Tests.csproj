@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\ClientHub.Domain\ClientHub.Domain.csproj" />
+    <ProjectReference Include="..\..\Core\ClientHub.UseCases\ClientHub.UseCases.csproj" />
   </ItemGroup>
 
 </Project>
