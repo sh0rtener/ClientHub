@@ -10,20 +10,12 @@ public sealed class Ogrn : ValueObject
 
     public string Value { get; }
 
-    public Ogrn(string value)
+    public Ogrn(string value, ClientType type)
     {
         ArgumentNullException.ThrowIfNull(value);
         value = value.Trim();
         Guard.ValidateLength(value);
-        Validate(value);
-        Value = value;
-    }
-
-    public Ogrn(string value, int maxLength)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        value = value.Trim();
-        Guard.ValidateLength(value, maxLength);
+        _type = type;
         Validate(value);
         Value = value;
     }

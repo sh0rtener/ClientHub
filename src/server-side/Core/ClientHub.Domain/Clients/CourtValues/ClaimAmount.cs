@@ -6,7 +6,8 @@ public sealed class ClaimAmount : ValueObject
 
     public ClaimAmount(decimal value)
     {
-        Guard.MustGreaterThan(value);
+        Guard.MustGreaterThan(value, 1);
+        
         Value = value;
     }
 
