@@ -1,0 +1,29 @@
+using AutoMapper;
+using ClientHub.Domain.LegalEntities;
+
+namespace ClientHub.Persistense.EntityFramework.Models;
+
+public sealed class FounderClientProfile : Profile
+{
+    public FounderClientProfile()
+    {
+        CreateMap<FounderClient, FounderClientDao>()
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => (int)src.Type));
+
+        CreateMap<FounderClientDao, FounderClient>()
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => (LegalEntityLinkType)src.Type));
+    }
+}
+
+public sealed class FounderClientDao
+{
+    public Guid Id { get; set; }
+    public int Type { get; set; }
+    public DateTime AssignedAt { get; set; }
+    public DateTime? DisassignedAt { get; set; }
+    public decimal IncomeShareInDollars { get; set; }
+    public decimal IncomeShareInPercent { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public LegalEntityDao Client { get; set; }
+}

@@ -24,6 +24,9 @@ public sealed class MappingProfilesTests
             cfg =>
             {
                 cfg.AddMaps(typeof(ClientContactProfile).Assembly);
+                cfg.AddMaps(
+                    typeof(Persistense.EntityFramework.Models.ClientActionProfile).Assembly
+                );
             },
             NullLoggerFactory.Instance
         );
