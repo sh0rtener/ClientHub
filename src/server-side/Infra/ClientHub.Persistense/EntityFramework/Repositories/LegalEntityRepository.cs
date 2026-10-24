@@ -25,6 +25,8 @@ public sealed class LegalEntityRepository : ILegalEntityRepository
             .Include(x => x.Client)
                 .ThenInclude(x => x.ClientContacts)
             .Include(x => x.Client)
+            .ThenInclude(x => x.GoodsMark)
+            .Include(x => x.Client)
                 .ThenInclude(x => x.ClientActions)
             .Include(x => x.Client)
                 .ThenInclude(x => x.ClientEvents)
@@ -46,7 +48,7 @@ public sealed class LegalEntityRepository : ILegalEntityRepository
 
     public Task<bool> IsExist(int id, CancellationToken cancellationToken = default)
     {
-        return _dbContext.LegalEntities.AnyAsync(x => x.ClientId == id, cancellationToken);
+        return _dbContext.LegalEntities.AnyAsync(x => x.Id == id, cancellationToken);
     }
 
     public Task<bool> IsExist(Inn inn, CancellationToken cancellationToken = default)
@@ -81,6 +83,7 @@ public sealed class LegalEntityRepository : ILegalEntityRepository
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         _mapper.Map(entity, dao);
+        _mapper.Map(entity, dao.Client);
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 

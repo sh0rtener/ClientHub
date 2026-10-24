@@ -78,7 +78,17 @@ public sealed class UseCaseLegalEntityRepository : IUseCaseLegalEntitiesReposito
             .OrderBy(x => x.Id)
             .Skip(filter.Offset)
             .Take(filter.Limit)
-            .ProjectTo<ShortLegalEntityDto>(_mapper.ConfigurationProvider)
+            .Select(x => new ShortLegalEntityDto()
+            {
+                Id = x.Id,
+                Inn = x.Client.Inn,
+                Ogrn = x.Client.Ogrn,
+                Region = x.Client.Region,
+                Address = x.Client.Address,
+                ClientStatus = x.Client.Status,
+                RegistrationDate = x.Client.RegistrationDate,
+                LiquidationDate = x.Client.LiquidationDate,
+            })
             .ToListAsync(cancellationToken);
     }
 }

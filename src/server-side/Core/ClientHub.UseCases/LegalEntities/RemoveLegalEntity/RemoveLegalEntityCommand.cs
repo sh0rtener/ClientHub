@@ -37,10 +37,10 @@ public sealed class RemoveLegalEntityCommandHandler : IRequestHandler<RemoveLega
             await _repository.Remove(request.Id, cancellationToken);
             await _unitOfWork.CommitTransactionAsync(cancellationToken);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             await _unitOfWork.RollbackTransactionAsync(cancellationToken);
-            throw;
+            throw ex;
         }
     }
 }

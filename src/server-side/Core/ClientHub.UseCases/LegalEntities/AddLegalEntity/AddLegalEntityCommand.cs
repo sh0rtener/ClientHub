@@ -39,6 +39,8 @@ public sealed class AddLegalEntityCommandHandler : IRequestHandler<AddLegalEntit
                 $"ЮЛ по переданному ИНН {legalEntity.Inn.Value} уже существует"
             );
 
+        await _unitOfWork.BeginTransactionAsync(cancellationToken: cancellationToken);
+        
         try
         {
             var id = await _repository.Add(legalEntity, cancellationToken);
@@ -46,10 +48,10 @@ public sealed class AddLegalEntityCommandHandler : IRequestHandler<AddLegalEntit
 
             return id;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             await _unitOfWork.RollbackTransactionAsync(cancellationToken);
-            throw;
+            throw ex;
         }
     }
 }

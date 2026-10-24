@@ -13,7 +13,7 @@ public sealed class LegalEntityProfile : Profile
         CreateMap<LegalEntity, LegalEntityDto>()
             .ForMember(dest => dest.Inn, opt => opt.MapFrom(src => src.Inn.Value))
             .ForMember(dest => dest.Ogrn, opt => opt.MapFrom(src => src.Ogrn.Value))
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.Identifier))
             .ForMember(dest => dest.ClientContacts, opt => opt.MapFrom(src => src.Contacts))
             .ForMember(dest => dest.ClientActions, opt => opt.MapFrom(src => src.Actions))
             .ForMember(dest => dest.ClientEvents, opt => opt.MapFrom(src => src.Events))
@@ -31,7 +31,7 @@ public sealed class LegalEntityProfile : Profile
             .ForCtorParam("name", opt => opt.MapFrom(src => src.Name))
             .ForCtorParam(
                 "ogrn",
-                opt => opt.MapFrom(src => new Ogrn(src.Ogrn, ClientType.IndividualEntrepreneurs))
+                opt => opt.MapFrom(src => new Ogrn(src.Ogrn, ClientType.LegalEntity))
             )
             .ForCtorParam("region", opt => opt.MapFrom(src => src.Region))
             .ForCtorParam("address", opt => opt.MapFrom(src => src.Address))
@@ -48,8 +48,8 @@ public sealed class LegalEntityProfile : Profile
                         src.GoodsMark.DissasignedAt
                     ))
             )
-            .ForCtorParam("registrationDate", opt => opt.MapFrom(src => new Inn(src.Inn)))
-            .ForCtorParam("liquidationDate", opt => opt.MapFrom(src => new Inn(src.Inn)))
+            .ForCtorParam("registrationDate", opt => opt.MapFrom(src => src.RegistrationDate))
+            .ForCtorParam("liquidationDate", opt => opt.MapFrom(src => src.LiquidationDate))
             .ForCtorParam("contacts", opt => opt.MapFrom(src => src.ClientContacts))
             .ForCtorParam("actions", opt => opt.MapFrom(src => src.ClientActions))
             .ForCtorParam("events", opt => opt.MapFrom(src => src.ClientEvents))
@@ -61,7 +61,8 @@ public sealed class LegalEntityProfile : Profile
             .ForCtorParam("persons", opt => opt.MapFrom(src => src.FounderPersons))
             .ForCtorParam("beneficiars", opt => opt.MapFrom(src => src.Beneficiars))
             .ForCtorParam("maintainers", opt => opt.MapFrom(src => src.Maintainers))
-            .ForCtorParam("kpps", opt => opt.MapFrom(src => src.Kpps));
+            .ForCtorParam("kpps", opt => opt.MapFrom(src => src.Kpps))
+            .ForAllMembers(opt => opt.Ignore());
     }
 }
 

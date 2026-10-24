@@ -46,7 +46,7 @@ public sealed class LegalEntityDao
             arbitragesDeals: mapper.Map<List<ArbitrageDeal>>(client.ArbitrageDeals),
             proceedings: mapper.Map<List<EnforcementProceedings>>(client.Proceedings),
             jurisdictions: mapper.Map<List<CourtsOfGeneralJurisdiction>>(client.Jurisdictions),
-            okatoCode: mapper.Map<Okato>(dao.Okato),
+            okatoCode: new Okato(dao.Okato),
             headCount: dao.HeadCount,
             clients: mapper.Map<List<FounderClient>>(dao.FounderClients),
             persons: mapper.Map<List<FounderPerson>>(dao.FounderPersons),
@@ -55,7 +55,7 @@ public sealed class LegalEntityDao
             kpps: mapper.Map<List<Kpp>>(dao.Kpps)
         )
         {
-            Id = dao.Id
+            Id = dao.Id,
         };
     }
 }
@@ -68,6 +68,8 @@ public sealed class LegalEntityProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(x => x.Id, opt => opt.Ignore())
             .ForMember(x => x.ClientId, opt => opt.Ignore())
+            .ForMember(x => x.Okato, opt => opt.MapFrom(src => src.OkatoCode.Value))
+            .ForMember(x => x.HeadCount, opt => opt.MapFrom(src => src.HeadCount))
             .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src));
 
         CreateMap<LegalEntity, ClientDao>()

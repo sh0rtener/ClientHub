@@ -55,10 +55,10 @@ public sealed class UpdateLegalEntityCommandHandler
 
             return _mapper.Map<LegalEntityDto>(result);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             await _unitOfWork.RollbackTransactionAsync(cancellationToken);
-            throw;
+            throw ex;
         }
     }
 }

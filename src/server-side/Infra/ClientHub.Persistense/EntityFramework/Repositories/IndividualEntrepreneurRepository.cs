@@ -47,7 +47,7 @@ public sealed class IndividualEntrepreneurRepository : IIndividualEntrepreneurRe
     public Task<bool> IsExist(int id, CancellationToken cancellationToken = default)
     {
         return _dbContext.IndividualEntrepreneurs.AnyAsync(
-            x => x.ClientId == id,
+            x => x.Id == id,
             cancellationToken
         );
     }
