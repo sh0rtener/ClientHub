@@ -29,7 +29,7 @@ public sealed class RemoveIndividualEntrepreneurCommandHandler
         CancellationToken cancellationToken
     )
     {
-        if (await _repository.IsExist(request.Id, cancellationToken))
+        if (!await _repository.IsExist(request.Id, cancellationToken))
             throw new InvalidDataException(
                 $"ИП по переданному идентификатору {request.Id} не найдено"
             );

@@ -55,7 +55,7 @@ public sealed class IndividualEntrepreneursProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(x => x.Id, opt => opt.Ignore())
             .ForMember(x => x.ClientId, opt => opt.Ignore())
-            .ForMember(x => x.Requisite, opt => opt.Ignore())
+            .ForMember(x => x.RequisiteId, opt => opt.Ignore())
             .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src))
             .ForMember(dest => dest.Requisite, opt => opt.MapFrom(src => src.Requisite));
 

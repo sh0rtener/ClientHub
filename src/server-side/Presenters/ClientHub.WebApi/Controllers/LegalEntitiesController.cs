@@ -1,6 +1,7 @@
 using ClientHub.UseCases.LegalEntities;
 using ClientHub.UseCases.LegalEntities.AddLegalEntity;
 using ClientHub.UseCases.LegalEntities.GetAllLegalEntities;
+using ClientHub.UseCases.LegalEntities.GetLegalEntity;
 using ClientHub.UseCases.LegalEntities.RemoveLegalEntity;
 using ClientHub.UseCases.LegalEntities.UpdateLegalEntity;
 using MediatR;
@@ -17,6 +18,13 @@ public sealed class LegalEntitiesController : ControllerBase
     public LegalEntitiesController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetLegalEntityQuery() { Id = id }, cancellationToken);
+        return this.SendOkResult(result);
     }
 
     [HttpGet("all")]

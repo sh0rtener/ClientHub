@@ -1,6 +1,7 @@
 using ClientHub.UseCases.IndividualEntrepreneurs;
 using ClientHub.UseCases.IndividualEntrepreneurs.AddIndividualEntrepreneur;
 using ClientHub.UseCases.IndividualEntrepreneurs.GetAllIndividualEntrepreneurs;
+using ClientHub.UseCases.IndividualEntrepreneurs.GetIndividualEntrepreneur;
 using ClientHub.UseCases.IndividualEntrepreneurs.RemoveIndividualEntrepreneur;
 using ClientHub.UseCases.IndividualEntrepreneurs.UpdateIndividualEntrepreneur;
 using MediatR;
@@ -17,6 +18,16 @@ public sealed class IndividualEntrepreneursController : ControllerBase
     public IndividualEntrepreneursController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new GetIndividualEntrepreneurQuery() { Id = id },
+            cancellationToken
+        );
+        return this.SendOkResult(result);
     }
 
     [HttpGet("all")]

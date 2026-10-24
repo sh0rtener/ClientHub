@@ -39,6 +39,7 @@ public sealed class IndividualEntrepreneurRepository : IIndividualEntrepreneurRe
                 .ThenInclude(x => x.Proceedings)
             .Include(x => x.Client)
                 .ThenInclude(x => x.Jurisdictions)
+            .Include(x => x.Person)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         return entity is null ? null : IndividualEntrepreneursDao.ToDomain(entity, _mapper);
