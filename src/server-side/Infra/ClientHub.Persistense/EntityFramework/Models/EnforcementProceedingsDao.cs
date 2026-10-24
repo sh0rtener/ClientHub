@@ -28,6 +28,7 @@ public sealed class EnforcementProceedingsProfile : Profile
     public EnforcementProceedingsProfile()
     {
         CreateMap<EnforcementProceedings, EnforcementProceedingsDao>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(
                 dest => dest.FsspDepartament,
                 opt => opt.MapFrom(src => src.FsspDepartament.Value)
@@ -44,6 +45,7 @@ public sealed class EnforcementProceedingsProfile : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => (int)src.Status));
 
         CreateMap<EnforcementProceedingsDao, EnforcementProceedings>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.FsspDepartament, opt => opt.MapFrom(src => src.FsspDepartament))
             .ForMember(dest => dest.Bailiff, opt => opt.MapFrom(src => src.Bailiff))
             .ForMember(dest => dest.BasicDocType, opt => opt.MapFrom(src => src.BasicDocType))

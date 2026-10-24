@@ -55,10 +55,12 @@ public sealed class ArbitrageDeal : Entity<Guid>
         Instanse = instance ?? throw new InvalidPropertyException(nameof(instance));
         Category = category ?? throw new InvalidPropertyException(nameof(category));
         PartyRole = partyRole ?? throw new InvalidPropertyException(nameof(partyRole));
-        CountrAgentName = counterpartyName ?? throw new InvalidPropertyException(nameof(counterpartyName));
-        CountrAgentInn = counterpartyInn ?? throw new InvalidPropertyException(nameof(counterpartyInn));
+        CountrAgentName =
+            counterpartyName ?? throw new InvalidPropertyException(nameof(counterpartyName));
+        CountrAgentInn =
+            counterpartyInn ?? throw new InvalidPropertyException(nameof(counterpartyInn));
         ClaimAmount = claimAmount ?? throw new InvalidPropertyException(nameof(claimAmount));
-        Subject = subject ?? throw  new InvalidPropertyException(nameof(subject));
+        Subject = subject ?? throw new InvalidPropertyException(nameof(subject));
         Guard.ValidateEnum(status);
         Status = status;
         ValidateResult(result);
@@ -155,7 +157,12 @@ public sealed class ArbitrageDeal : Entity<Guid>
     )
     {
         if (
-            actualStatus is not (ArbitrageDealStatuses.Decided or ArbitrageDealStatuses.Completed)
+            actualStatus
+                is not (
+                    ArbitrageDealStatuses.Decided
+                    or ArbitrageDealStatuses.Completed
+                    or ArbitrageDealStatuses.Appealed
+                )
             && (decisionDate.HasValue)
         )
             throw new InvalidPropertyException(

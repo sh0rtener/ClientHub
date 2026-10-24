@@ -8,9 +8,11 @@ public sealed class ClientActionProfile : Profile
     public ClientActionProfile()
     {
         CreateMap<ClientAction, ClientActionDao>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(x => x.Kind, opt => opt.MapFrom(x => (int)x.Kind));
 
         CreateMap<ClientActionDao, ClientAction>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.Kind, opt => opt.MapFrom(src => (ClientActionType)src.Kind));
     }
 }

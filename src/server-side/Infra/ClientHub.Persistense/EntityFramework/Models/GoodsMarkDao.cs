@@ -7,7 +7,7 @@ public sealed class GoodsMarkProfile : Profile
 {
     public GoodsMarkProfile()
     {
-        CreateMap<GoodsMark, GoodsMarkDao>().ReverseMap();
+        CreateMap<GoodsMark, GoodsMarkDao>().ForMember(d => d.Id, o => o.Ignore()).ReverseMap();
     }
 }
 

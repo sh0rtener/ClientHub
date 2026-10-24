@@ -8,9 +8,11 @@ public sealed class BeneficiarProfile : Profile
     public BeneficiarProfile()
     {
         CreateMap<Beneficiar, BeneficiarDao>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => (int)src.Type));
 
         CreateMap<BeneficiarDao, Beneficiar>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => (LegalEntityLinkType)src.Type));
     }
 }

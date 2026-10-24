@@ -9,12 +9,12 @@ public sealed class Inn : DefaultStringValueObject
     public Inn(string value)
         : base(value) { }
 
-    public void Validate(string value)
+    public override void Validate(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new InvalidPropertyException(nameof(value));
         if (!Regex.IsMatch(value.Trim(), _innRegex))
-            throw new InvalidPropertyException(nameof(value), "должно быть от 10 до 12 цифр");
+            throw new InvalidPropertyException(nameof(value), "должно быть либо 10 либо 12 цифр");
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

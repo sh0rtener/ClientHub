@@ -27,6 +27,7 @@ public sealed class ArbitrageDealProfile : Profile
     public ArbitrageDealProfile()
     {
         CreateMap<ArbitrageDeal, ArbitrageDealDao>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.CaseNumber, opt => opt.MapFrom(src => src.CaseNumber.Value))
             .ForMember(dest => dest.CourtName, opt => opt.MapFrom(src => src.CourtName.Value))
             .ForMember(dest => dest.Instanse, opt => opt.MapFrom(src => src.Instanse.Value))
@@ -49,6 +50,7 @@ public sealed class ArbitrageDealProfile : Profile
             );
 
         CreateMap<ArbitrageDealDao, ArbitrageDeal>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.CaseNumber, opt => opt.MapFrom(src => src.CaseNumber))
             .ForMember(dest => dest.CourtName, opt => opt.MapFrom(src => src.CourtName))
             .ForMember(dest => dest.Instanse, opt => opt.MapFrom(src => src.Instanse))

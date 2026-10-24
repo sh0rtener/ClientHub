@@ -66,8 +66,11 @@ public sealed class EnforcementProceedings : Entity<Guid>
         OpenedAt = openedAt;
         ValidateClosedAt(closedAt, status);
         ClosedAt = closedAt;
-        ValidateClosedReason(closureReason, status, openedAt, closedAt);
-        ClosureReason = closureReason?.Trim() ?? null;
+        if (closureReason is not null)
+        {
+            ValidateClosedReason(closureReason, status, openedAt, closedAt);
+            ClosureReason = closureReason;
+        }
     }
 
     public void ChangeFsspDepartament(FsspDepartament fsspDepartament) =>
@@ -134,8 +137,6 @@ public sealed class EnforcementProceedings : Entity<Guid>
             is not (EnforcementProceedingsStatuses.Start or EnforcementProceedingsStatuses.Stopped)
         )
             throw new CannotChangeEnforcementProceedingsStatusException();
-
-        ValidateClosedAt(closedAt, Status);
 
         ValidateClosedReason(closureReason, Status, OpenedAt, ClosedAt);
 

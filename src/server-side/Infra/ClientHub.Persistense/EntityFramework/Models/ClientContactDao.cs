@@ -8,9 +8,11 @@ public sealed class ClientContactProfile : Profile
     public ClientContactProfile()
     {
         CreateMap<ClientContact, ClientContactDao>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(x => x.ContactType, opt => opt.MapFrom(x => (int)x.ContactType));
 
         CreateMap<ClientContactDao, ClientContact>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(
                 dest => dest.ContactType,
                 opt => opt.MapFrom(src => (ClientContactType)src.ContactType)

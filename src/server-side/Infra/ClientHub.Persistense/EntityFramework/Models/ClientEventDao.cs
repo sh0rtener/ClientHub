@@ -8,6 +8,7 @@ public sealed class ClientEventProfile : Profile
     public ClientEventProfile()
     {
         CreateMap<ClientEvent, ClientEventDao>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(
                 dest => dest.Source,
                 opt => opt.MapFrom(src => src.Source.Source))
@@ -16,6 +17,7 @@ public sealed class ClientEventProfile : Profile
                 opt => opt.MapFrom(src => src.Source.SourceUrl));
 
         CreateMap<ClientEventDao, ClientEvent>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(
                 dest => dest.Source,
                 opt => opt.MapFrom(src =>

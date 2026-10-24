@@ -8,9 +8,11 @@ public sealed class MaintainerProfile : Profile
     public MaintainerProfile()
     {
         CreateMap<Maintainer, MaintainerDao>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => (int)src.Type));
 
         CreateMap<MaintainerDao, Maintainer>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => (LegalEntityLinkType)src.Type));
     }
 }

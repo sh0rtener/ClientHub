@@ -8,9 +8,11 @@ public sealed class PersonProfile : Profile
     public PersonProfile()
     {
         CreateMap<Person, PersonDao>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => (int)src.Gender));
 
         CreateMap<PersonDao, Person>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => (PersonGender)src.Gender));
     }
 }

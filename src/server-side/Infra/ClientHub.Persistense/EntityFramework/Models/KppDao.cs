@@ -7,7 +7,7 @@ public sealed class KppProfile : Profile
 {
     public KppProfile()
     {
-        CreateMap<Kpp, KppDao>().ReverseMap();
+        CreateMap<Kpp, KppDao>().ForMember(d => d.Id, o => o.Ignore()).ReverseMap();
     }
 }
 

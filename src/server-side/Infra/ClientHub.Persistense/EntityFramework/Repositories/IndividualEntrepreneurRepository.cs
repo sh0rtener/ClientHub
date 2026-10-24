@@ -86,8 +86,22 @@ public sealed class IndividualEntrepreneurRepository : IIndividualEntrepreneurRe
     )
     {
         var dao = await _dbContext
-            .IndividualEntrepreneurs.Include(x => x.Client)
-            .Include(x => x.Requisite)
+            .IndividualEntrepreneurs.Include(x => x.Requisite)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.GoodsMark)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.ClientContacts)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.ClientActions)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.ClientEvents)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.ArbitrageDeals)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.Proceedings)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.Jurisdictions)
+            .Include(x => x.Person)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         if (dao is null)

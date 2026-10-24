@@ -8,9 +8,11 @@ public sealed class FounderPersonProfile : Profile
     public FounderPersonProfile()
     {
         CreateMap<FounderPerson, FounderPersonDao>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => (int)src.Type));
 
         CreateMap<FounderPersonDao, FounderPerson>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => (LegalEntityLinkType)src.Type));
     }
 }

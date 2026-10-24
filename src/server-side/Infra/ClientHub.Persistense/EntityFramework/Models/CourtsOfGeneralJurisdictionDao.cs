@@ -26,6 +26,7 @@ public sealed class CourtsOfGeneralJurisdictionProfile : Profile
     public CourtsOfGeneralJurisdictionProfile()
     {
         CreateMap<CourtsOfGeneralJurisdiction, CourtsOfGeneralJurisdictionDao>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.CaseNumber, opt => opt.MapFrom(src => src.CaseNumber.Value))
             .ForMember(dest => dest.CourtName, opt => opt.MapFrom(src => src.CourtName.Value))
             .ForMember(dest => dest.Instanse, opt => opt.MapFrom(src => src.Instanse.Value))
@@ -48,6 +49,7 @@ public sealed class CourtsOfGeneralJurisdictionProfile : Profile
             );
 
         CreateMap<CourtsOfGeneralJurisdictionDao, CourtsOfGeneralJurisdiction>()
+            .ForMember(d => d.Id, o => o.Ignore()) 
             .ForMember(dest => dest.CaseNumber, opt => opt.MapFrom(src => src.CaseNumber))
             .ForMember(dest => dest.CourtName, opt => opt.MapFrom(src => src.CourtName))
             .ForMember(dest => dest.Instanse, opt => opt.MapFrom(src => src.Instanse))

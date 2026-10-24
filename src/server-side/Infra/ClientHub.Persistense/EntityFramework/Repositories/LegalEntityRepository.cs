@@ -79,7 +79,25 @@ public sealed class LegalEntityRepository : ILegalEntityRepository
         ArgumentNullException.ThrowIfNull(entity);
 
         var dao = await _dbContext
-            .LegalEntities.Include(x => x.Client)
+            .LegalEntities.Include(x => x.Client).Include(x => x.Client)
+            .ThenInclude(x => x.ClientContacts)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.GoodsMark)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.ClientActions)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.ClientEvents)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.ArbitrageDeals)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.Proceedings)
+            .Include(x => x.Client)
+            .ThenInclude(x => x.Jurisdictions)
+            .Include(x => x.FounderClients)
+            .Include(x => x.FounderPersons)
+            .Include(x => x.Beneficiars)
+            .Include(x => x.Maintainers)
+            .Include(x => x.Kpps)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         _mapper.Map(entity, dao);
