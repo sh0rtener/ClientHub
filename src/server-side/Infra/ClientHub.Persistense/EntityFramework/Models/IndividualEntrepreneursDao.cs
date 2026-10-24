@@ -14,7 +14,9 @@ public sealed class IndividualEntrepreneursDao
     public int ClientId { get; set; }
     public ClientDao Client { get; set; }
     public Guid RequisiteId { get; set; }
-    public IndividualEntrepreneurRequisiteDao Requisite { get; set; } = new();
+    public IndividualEntrepreneurRequisiteDao Requisite { get; set; }
+    public Guid PersonId { get; set; }
+    public PersonDao Person { get; set; }
 
     public static IndividualEntrepreneur ToDomain(IndividualEntrepreneursDao dao, IMapper mapper)
     {
@@ -36,7 +38,8 @@ public sealed class IndividualEntrepreneursDao
             arbitragesDeals: mapper.Map<List<ArbitrageDeal>>(client.ArbitrageDeals),
             proceedings: mapper.Map<List<EnforcementProceedings>>(client.Proceedings),
             jurisdictions: mapper.Map<List<CourtsOfGeneralJurisdiction>>(client.Jurisdictions),
-            requisite: mapper.Map<IndividualEntrepreneurRequisite>(dao.Requisite)
+            requisite: mapper.Map<IndividualEntrepreneurRequisite>(dao.Requisite),
+            person: mapper.Map<Person>(dao.Person)
         )
         {
             Id = dao.Id,

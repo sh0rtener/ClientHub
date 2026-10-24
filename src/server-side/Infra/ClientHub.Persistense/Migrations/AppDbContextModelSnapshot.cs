@@ -540,6 +540,9 @@ namespace ClientHub.Persistense.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("RequisiteId")
                         .HasColumnType("uuid");
 
@@ -547,6 +550,8 @@ namespace ClientHub.Persistense.Migrations
 
                     b.HasIndex("ClientId")
                         .IsUnique();
+
+                    b.HasIndex("PersonId");
 
                     b.HasIndex("RequisiteId")
                         .IsUnique();
@@ -804,6 +809,12 @@ namespace ClientHub.Persistense.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ClientHub.Persistense.EntityFramework.Models.PersonDao", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.IndividualEntrepreneurRequisiteDao", "Requisite")
                         .WithOne()
                         .HasForeignKey("ClientHub.Persistense.EntityFramework.Models.IndividualEntrepreneursDao", "RequisiteId")
@@ -811,6 +822,8 @@ namespace ClientHub.Persistense.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+
+                    b.Navigation("Person");
 
                     b.Navigation("Requisite");
                 });

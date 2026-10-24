@@ -24,7 +24,8 @@ public sealed class IndividualEntrepreneur : Client
         IEnumerable<ArbitrageDeal>? arbitragesDeals,
         IEnumerable<EnforcementProceedings>? proceedings,
         IEnumerable<CourtsOfGeneralJurisdiction>? jurisdictions,
-        IndividualEntrepreneurRequisite requisite
+        IndividualEntrepreneurRequisite requisite,
+        Person person
     )
         : base(
             inn,
@@ -46,7 +47,9 @@ public sealed class IndividualEntrepreneur : Client
         )
     {
         Requisite = requisite ?? throw new InvalidPropertyException((nameof(requisite)));
+        Person = person ?? throw new InvalidPropertyException((nameof(person)));
     }
 
     public IndividualEntrepreneurRequisite Requisite { get; private set; }
+    public Person Person { get; private set; }
 }

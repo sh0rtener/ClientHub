@@ -25,6 +25,7 @@ public sealed class IndividualEntrepreneursDto
     public List<EnforcementProceedingsDto> Proceedings { get; set; } = [];
     public List<CourtsOfGeneralJurisdictionDto> Jurisdictions { get; set; } = [];
     public IndividualEntrepreneurRequisiteDto Requisite { get; set; } = new();
+    public PersonDto Person { get; set; } = new();
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
 }
@@ -43,7 +44,8 @@ public sealed class IndividualEntrepreneursProfile : Profile
             .ForMember(dest => dest.ArbitrageDeals, opt => opt.MapFrom(src => src.ArbitragesDeals))
             .ForMember(dest => dest.Proceedings, opt => opt.MapFrom(src => src.Proceedings))
             .ForMember(dest => dest.Jurisdictions, opt => opt.MapFrom(src => src.Jurisdictions))
-            .ForMember(dest => dest.Requisite, opt => opt.MapFrom(src => src.Requisite));
+            .ForMember(dest => dest.Requisite, opt => opt.MapFrom(src => src.Requisite))
+            .ForMember(dest => dest.Person, opt => opt.MapFrom(src => src.Person));
 
         CreateMap<IndividualEntrepreneursDto, IndividualEntrepreneur>()
             .ForCtorParam("inn", opt => opt.MapFrom(src => new Inn(src.Inn)))
@@ -75,6 +77,7 @@ public sealed class IndividualEntrepreneursProfile : Profile
             .ForCtorParam("arbitragesDeals", opt => opt.MapFrom(src => src.ArbitrageDeals))
             .ForCtorParam("proceedings", opt => opt.MapFrom(src => src.Proceedings))
             .ForCtorParam("jurisdictions", opt => opt.MapFrom(src => src.Jurisdictions))
-            .ForCtorParam("requisite", opt => opt.MapFrom(src => src.Requisite));
+            .ForCtorParam("requisite", opt => opt.MapFrom(src => src.Requisite))
+            .ForCtorParam("person", opt => opt.MapFrom(src => src.Person));
     }
 }

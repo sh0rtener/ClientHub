@@ -193,6 +193,8 @@ public sealed class PersonTests
 
 public sealed class ClientLifecycleTests
 {
+    private static Person CreatePerson() =>
+        new("Иван", "Иванов", "Иванович", new DateTime(1990, 1, 1), PersonGender.Male, "77");
     private static IndividualEntrepreneur Create(ClientStatus? status = null) =>
         new(
             new Inn("123456789012"),
@@ -216,7 +218,8 @@ public sealed class ClientLifecycleTests
                 "ИФНС",
                 new DateTime(2020, 1, 1),
                 new DateTime(2020, 1, 2)
-            )
+            ),
+            CreatePerson()
         );
 
     [Fact]
@@ -634,6 +637,8 @@ public sealed class LegalEntityLinkTests
 
 public sealed class IndividualEntrepreneurTests
 {
+    private static Person CreatePerson() =>
+        new("Иван", "Иванов", "Иванович", new DateTime(1990, 1, 1), PersonGender.Male, "77");
     private static IndividualEntrepreneurRequisite CreateRequisite() =>
         new("ИП", "ФНС России", "ИФНС № 1", new DateTime(2020, 1, 1), new DateTime(2020, 1, 2));
 
@@ -656,7 +661,8 @@ public sealed class IndividualEntrepreneurTests
             null,
             null,
             null,
-            requisite ?? CreateRequisite()
+            requisite ?? CreateRequisite(),
+            CreatePerson()
         );
 
     [Fact]
@@ -710,7 +716,8 @@ public sealed class LegalEntityTests
                 "ИФНС",
                 new DateTime(2020, 1, 1),
                 new DateTime(2020, 1, 2)
-            )
+            ),
+            CreatePerson()
         );
 
     private static LegalEntity Create(int headCount = 10) =>

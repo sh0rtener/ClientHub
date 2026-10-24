@@ -1,3 +1,5 @@
+using ClientHub.UseCases.Shared.Dtos;
+
 namespace ClientHub.UseCases.IndividualEntrepreneurs;
 
 public class ShortIndividualEntrepreneursDto
@@ -11,4 +13,5 @@ public class ShortIndividualEntrepreneursDto
     public DateTime? RegistrationDate { get; set; }
     public DateTime? LiquidationDate { get; set; }
     public IndividualEntrepreneurRequisiteDto Requisite { get; set; } = new();
+    public PersonDto Person { get; set; } = new();
 }

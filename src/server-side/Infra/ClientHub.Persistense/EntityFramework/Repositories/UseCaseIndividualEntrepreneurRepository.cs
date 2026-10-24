@@ -1,4 +1,5 @@
 using ClientHub.UseCases.IndividualEntrepreneurs;
+using ClientHub.UseCases.Shared.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClientHub.Persistense.EntityFramework.Repositories;
@@ -102,6 +103,18 @@ public sealed class UseCaseIndividualEntrepreneurRepository
                     TaxAuthority = x.Requisite.TaxAuthority,
                     RegistrationDate = x.Requisite.RegistrationDate,
                     TaxRegistrationDate = x.Requisite.TaxRegistrationDate,
+                },
+                Person = new PersonDto()
+                {
+                    Id = x.Person.Id,
+                    FirstName = x.Person.FirstName,
+                    LastName = x.Person.LastName,
+                    Patronymic = x.Person.Patronymic,
+                    Gender = x.Person.Gender,
+                    BirthDate = x.Person.BirthDate,
+                    RegionCode = x.Person.RegionCode,
+                    CreatedAt = x.Person.CreatedAt,
+                    UpdatedAt = x.Person.UpdatedAt,
                 },
             })
             .ToListAsync(cancellationToken);
