@@ -20,6 +20,7 @@ public sealed class LegalEntityDao
     public List<MaintainerDao> Maintainers { get; set; } = [];
     public List<KppDao> Kpps { get; set; } = [];
 
+    public int ClientId { get; set; }
     public ClientDao Client { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
@@ -52,7 +53,10 @@ public sealed class LegalEntityDao
             beneficiars: mapper.Map<List<Beneficiar>>(dao.Beneficiars),
             maintainers: mapper.Map<List<Maintainer>>(dao.Maintainers),
             kpps: mapper.Map<List<Kpp>>(dao.Kpps)
-        );
+        )
+        {
+            Id = dao.Id
+        };
     }
 }
 
@@ -61,6 +65,9 @@ public sealed class LegalEntityProfile : Profile
     public LegalEntityProfile()
     {
         CreateMap<LegalEntity, LegalEntityDao>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(x => x.Id, opt => opt.Ignore())
+            .ForMember(x => x.ClientId, opt => opt.Ignore())
             .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src));
 
         CreateMap<LegalEntity, ClientDao>()

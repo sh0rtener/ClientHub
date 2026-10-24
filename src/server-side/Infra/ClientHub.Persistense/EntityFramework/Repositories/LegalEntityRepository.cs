@@ -46,7 +46,7 @@ public sealed class LegalEntityRepository : ILegalEntityRepository
 
     public Task<bool> IsExist(int id, CancellationToken cancellationToken = default)
     {
-        return _dbContext.LegalEntities.AnyAsync(x => x.Id == id, cancellationToken);
+        return _dbContext.LegalEntities.AnyAsync(x => x.ClientId == id, cancellationToken);
     }
 
     public Task<bool> IsExist(Inn inn, CancellationToken cancellationToken = default)
@@ -89,15 +89,24 @@ public sealed class LegalEntityRepository : ILegalEntityRepository
 
     public async Task Remove(int id, CancellationToken cancellationToken = default)
     {
-        var dao = await _dbContext.LegalEntities.FirstOrDefaultAsync(
+        var leDao = await _dbContext.LegalEntities.FirstOrDefaultAsync(
             x => x.Id == id,
+            cancellationToken
+        );
+
+        if (leDao is null)
+            return;
+
+        var dao = await _dbContext.Clients.FirstOrDefaultAsync(
+            x => x.Id == leDao.ClientId,
             cancellationToken
         );
 
         if (dao is null)
             return;
 
-        _dbContext.LegalEntities.Remove(dao);
+        _dbContext.Clients.Remove(dao);
+
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

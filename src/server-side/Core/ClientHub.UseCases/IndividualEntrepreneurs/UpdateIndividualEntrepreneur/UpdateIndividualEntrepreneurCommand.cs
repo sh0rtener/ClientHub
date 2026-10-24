@@ -57,7 +57,7 @@ public sealed class UpdateIndividualEntrepreneurCommandHandler
 
             return _mapper.Map<IndividualEntrepreneursDto>(result);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             await _unitOfWork.RollbackTransactionAsync(cancellationToken);
             throw;

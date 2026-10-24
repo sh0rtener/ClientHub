@@ -11,13 +11,12 @@ namespace ClientHub.Persistense.EntityFramework.Models;
 public sealed class IndividualEntrepreneursDao
 {
     public int Id { get; set; }
+    public int ClientId { get; set; }
     public ClientDao Client { get; set; }
+    public Guid RequisiteId { get; set; }
     public IndividualEntrepreneurRequisiteDao Requisite { get; set; } = new();
 
-    public static IndividualEntrepreneur ToDomain(
-        IndividualEntrepreneursDao dao,
-        IMapper mapper
-    )
+    public static IndividualEntrepreneur ToDomain(IndividualEntrepreneursDao dao, IMapper mapper)
     {
         var client = dao.Client;
 
@@ -38,7 +37,10 @@ public sealed class IndividualEntrepreneursDao
             proceedings: mapper.Map<List<EnforcementProceedings>>(client.Proceedings),
             jurisdictions: mapper.Map<List<CourtsOfGeneralJurisdiction>>(client.Jurisdictions),
             requisite: mapper.Map<IndividualEntrepreneurRequisite>(dao.Requisite)
-        );
+        )
+        {
+            Id = dao.Id,
+        };
     }
 }
 
@@ -47,6 +49,10 @@ public sealed class IndividualEntrepreneursProfile : Profile
     public IndividualEntrepreneursProfile()
     {
         CreateMap<IndividualEntrepreneur, IndividualEntrepreneursDao>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(x => x.Id, opt => opt.Ignore())
+            .ForMember(x => x.ClientId, opt => opt.Ignore())
+            .ForMember(x => x.Requisite, opt => opt.Ignore())
             .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src))
             .ForMember(dest => dest.Requisite, opt => opt.MapFrom(src => src.Requisite));
 

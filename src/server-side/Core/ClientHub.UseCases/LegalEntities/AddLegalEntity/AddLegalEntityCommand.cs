@@ -34,7 +34,7 @@ public sealed class AddLegalEntityCommandHandler : IRequestHandler<AddLegalEntit
     {
         var legalEntity = _mapper.Map<LegalEntity>(request.LegalEntity);
 
-        if (!await _repository.IsExist(legalEntity.Inn, cancellationToken))
+        if (await _repository.IsExist(legalEntity.Inn, cancellationToken))
             throw new InvalidDataException(
                 $"ЮЛ по переданному ИНН {legalEntity.Inn.Value} уже существует"
             );

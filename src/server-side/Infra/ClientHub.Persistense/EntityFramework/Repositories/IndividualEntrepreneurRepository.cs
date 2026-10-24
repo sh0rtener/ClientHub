@@ -26,6 +26,8 @@ public sealed class IndividualEntrepreneurRepository : IIndividualEntrepreneurRe
             .IndividualEntrepreneurs.AsNoTracking()
             .Include(x => x.Requisite)
             .Include(x => x.Client)
+                .ThenInclude(x => x.GoodsMark)
+            .Include(x => x.Client)
                 .ThenInclude(x => x.ClientContacts)
             .Include(x => x.Client)
                 .ThenInclude(x => x.ClientActions)
@@ -44,7 +46,10 @@ public sealed class IndividualEntrepreneurRepository : IIndividualEntrepreneurRe
 
     public Task<bool> IsExist(int id, CancellationToken cancellationToken = default)
     {
-        return _dbContext.IndividualEntrepreneurs.AnyAsync(x => x.Id == id, cancellationToken);
+        return _dbContext.IndividualEntrepreneurs.AnyAsync(
+            x => x.ClientId == id,
+            cancellationToken
+        );
     }
 
     public Task<bool> IsExist(Inn inn, CancellationToken cancellationToken = default)
@@ -79,25 +84,17 @@ public sealed class IndividualEntrepreneurRepository : IIndividualEntrepreneurRe
         CancellationToken cancellationToken = default
     )
     {
-        ArgumentNullException.ThrowIfNull(entity);
-
         var dao = await _dbContext
-            .IndividualEntrepreneurs.Include(x => x.Requisite)
-            .Include(x => x.Client)
-                .ThenInclude(x => x.ClientContacts)
-            .Include(x => x.Client)
-                .ThenInclude(x => x.ClientActions)
-            .Include(x => x.Client)
-                .ThenInclude(x => x.ClientEvents)
-            .Include(x => x.Client)
-                .ThenInclude(x => x.ArbitrageDeals)
-            .Include(x => x.Client)
-                .ThenInclude(x => x.Proceedings)
-            .Include(x => x.Client)
-                .ThenInclude(x => x.Jurisdictions)
+            .IndividualEntrepreneurs.Include(x => x.Client)
+            .Include(x => x.Requisite)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
+        if (dao is null)
+            throw new KeyNotFoundException($"Individual entrepreneur with id {id} was not found.");
+
         _mapper.Map(entity, dao);
+        _mapper.Map(entity, dao.Client);
+        _mapper.Map(entity.Requisite, dao.Requisite);
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
@@ -106,15 +103,23 @@ public sealed class IndividualEntrepreneurRepository : IIndividualEntrepreneurRe
 
     public async Task Remove(int id, CancellationToken cancellationToken = default)
     {
-        var dao = await _dbContext.IndividualEntrepreneurs.FirstOrDefaultAsync(
+        var ipDao = await _dbContext.IndividualEntrepreneurs.FirstOrDefaultAsync(
             x => x.Id == id,
+            cancellationToken
+        );
+
+        if (ipDao is null)
+            return;
+
+        var dao = await _dbContext.Clients.FirstOrDefaultAsync(
+            x => x.Id == ipDao.ClientId,
             cancellationToken
         );
 
         if (dao is null)
             return;
 
-        _dbContext.IndividualEntrepreneurs.Remove(dao);
+        _dbContext.Clients.Remove(dao);
 
         await _dbContext.SaveChangesAsync(cancellationToken);
     }

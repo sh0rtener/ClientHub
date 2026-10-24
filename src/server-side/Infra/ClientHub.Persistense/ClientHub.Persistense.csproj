@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="EntityFramework\Configurations\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Core\ClientHub.UseCases\ClientHub.UseCases.csproj" />
   </ItemGroup>
 

@@ -8,6 +8,7 @@ public sealed class IndividualEntrepreneurRequisiteProfile : Profile
     public IndividualEntrepreneurRequisiteProfile()
     {
         CreateMap<IndividualEntrepreneurRequisite, IndividualEntrepreneurRequisiteDao>()
+            .ForMember(x => x.Id, opt => opt.Ignore())
             .ReverseMap();
     }
 }

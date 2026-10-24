@@ -35,7 +35,7 @@ public sealed class AddIndividualEntrepreneurCommandHandler
     {
         var individualEntrepreneur = _mapper.Map<IndividualEntrepreneur>(request.IPs);
 
-        if (!await _repository.IsExist(individualEntrepreneur.Inn, cancellationToken))
+        if (await _repository.IsExist(individualEntrepreneur.Inn, cancellationToken))
             throw new InvalidDataException(
                 $"ИП по переданному ИНН {individualEntrepreneur.Inn.Value} уже существует"
             );

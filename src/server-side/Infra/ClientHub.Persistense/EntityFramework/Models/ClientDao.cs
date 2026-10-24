@@ -9,7 +9,7 @@ public sealed class ClientDao
     public string Region { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
     public int Status { get; set; }
-    public GoodsMarkDao GoodsMark { get; set; } = new();
+    public GoodsMarkDao GoodsMark { get; set; } 
     public DateTime? RegistrationDate { get; set; }
     public DateTime? LiquidationDate { get; set; }
     public List<ClientContactDao> ClientContacts { get; set; } = [];

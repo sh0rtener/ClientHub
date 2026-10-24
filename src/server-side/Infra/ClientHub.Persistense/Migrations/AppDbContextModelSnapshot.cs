@@ -419,6 +419,9 @@ namespace ClientHub.Persistense.Migrations
                     b.Property<decimal>("IncomeShareInPercent")
                         .HasColumnType("numeric");
 
+                    b.Property<int>("LegalEntityDaoId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
@@ -428,6 +431,8 @@ namespace ClientHub.Persistense.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("LegalEntityDaoId");
 
                     b.ToTable("FounderClients");
                 });
@@ -540,9 +545,11 @@ namespace ClientHub.Persistense.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ClientId")
+                        .IsUnique();
 
-                    b.HasIndex("RequisiteId");
+                    b.HasIndex("RequisiteId")
+                        .IsUnique();
 
                     b.ToTable("IndividualEntrepreneurs");
                 });
@@ -595,7 +602,8 @@ namespace ClientHub.Persistense.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ClientId")
+                        .IsUnique();
 
                     b.ToTable("LegalEntities");
                 });
@@ -684,14 +692,16 @@ namespace ClientHub.Persistense.Migrations
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.ClientDao", null)
                         .WithMany("ArbitrageDeals")
-                        .HasForeignKey("ClientDaoId");
+                        .HasForeignKey("ClientDaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ClientHub.Persistense.EntityFramework.Models.BeneficiarDao", b =>
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.LegalEntityDao", null)
                         .WithMany("Beneficiars")
-                        .HasForeignKey("LegalEntityDaoId");
+                        .HasForeignKey("LegalEntityDaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.PersonDao", "Person")
                         .WithMany()
@@ -706,14 +716,16 @@ namespace ClientHub.Persistense.Migrations
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.ClientDao", null)
                         .WithMany("ClientActions")
-                        .HasForeignKey("ClientDaoId");
+                        .HasForeignKey("ClientDaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ClientHub.Persistense.EntityFramework.Models.ClientContactDao", b =>
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.ClientDao", null)
                         .WithMany("ClientContacts")
-                        .HasForeignKey("ClientDaoId");
+                        .HasForeignKey("ClientDaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ClientHub.Persistense.EntityFramework.Models.ClientDao", b =>
@@ -731,28 +743,37 @@ namespace ClientHub.Persistense.Migrations
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.ClientDao", null)
                         .WithMany("ClientEvents")
-                        .HasForeignKey("ClientDaoId");
+                        .HasForeignKey("ClientDaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ClientHub.Persistense.EntityFramework.Models.CourtsOfGeneralJurisdictionDao", b =>
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.ClientDao", null)
                         .WithMany("Jurisdictions")
-                        .HasForeignKey("ClientDaoId");
+                        .HasForeignKey("ClientDaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ClientHub.Persistense.EntityFramework.Models.EnforcementProceedingsDao", b =>
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.ClientDao", null)
                         .WithMany("Proceedings")
-                        .HasForeignKey("ClientDaoId");
+                        .HasForeignKey("ClientDaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ClientHub.Persistense.EntityFramework.Models.FounderClientDao", b =>
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.LegalEntityDao", "Client")
-                        .WithMany("FounderClients")
+                        .WithMany()
                         .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClientHub.Persistense.EntityFramework.Models.LegalEntityDao", null)
+                        .WithMany("FounderClients")
+                        .HasForeignKey("LegalEntityDaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -763,7 +784,8 @@ namespace ClientHub.Persistense.Migrations
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.LegalEntityDao", null)
                         .WithMany("FounderPersons")
-                        .HasForeignKey("LegalEntityDaoId");
+                        .HasForeignKey("LegalEntityDaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.PersonDao", "Person")
                         .WithMany()
@@ -777,14 +799,14 @@ namespace ClientHub.Persistense.Migrations
             modelBuilder.Entity("ClientHub.Persistense.EntityFramework.Models.IndividualEntrepreneursDao", b =>
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.ClientDao", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
+                        .WithOne()
+                        .HasForeignKey("ClientHub.Persistense.EntityFramework.Models.IndividualEntrepreneursDao", "ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.IndividualEntrepreneurRequisiteDao", "Requisite")
-                        .WithMany()
-                        .HasForeignKey("RequisiteId")
+                        .WithOne()
+                        .HasForeignKey("ClientHub.Persistense.EntityFramework.Models.IndividualEntrepreneursDao", "RequisiteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -797,14 +819,15 @@ namespace ClientHub.Persistense.Migrations
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.LegalEntityDao", null)
                         .WithMany("Kpps")
-                        .HasForeignKey("LegalEntityDaoId");
+                        .HasForeignKey("LegalEntityDaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ClientHub.Persistense.EntityFramework.Models.LegalEntityDao", b =>
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.ClientDao", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
+                        .WithOne()
+                        .HasForeignKey("ClientHub.Persistense.EntityFramework.Models.LegalEntityDao", "ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -815,7 +838,8 @@ namespace ClientHub.Persistense.Migrations
                 {
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.LegalEntityDao", null)
                         .WithMany("Maintainers")
-                        .HasForeignKey("LegalEntityDaoId");
+                        .HasForeignKey("LegalEntityDaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ClientHub.Persistense.EntityFramework.Models.PersonDao", "Person")
                         .WithMany()
