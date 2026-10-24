@@ -1,12 +1,16 @@
 using ClientHub.Persistense;
+using ClientHub.Persistense.EntityFramework;
+using ClientHub.UseCases;
+using ClientHub.WebApi;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger();
 builder.Services.AddPersistense(builder.Configuration);
+builder.Services.AddUseCases();
 
 var app = builder.Build();
 
@@ -16,9 +20,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.Migrate();
+}
 
 app.MapControllers();
 
