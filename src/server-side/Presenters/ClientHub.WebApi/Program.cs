@@ -1,3 +1,4 @@
+using ClientHub.Caching;
 using ClientHub.Persistense;
 using ClientHub.Persistense.EntityFramework;
 using ClientHub.UseCases;
@@ -11,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger();
 builder.Services.AddPersistense(builder.Configuration);
 builder.Services.AddUseCases();
+builder.Services.AddCaching(builder.Configuration);
 
 var app = builder.Build();
 

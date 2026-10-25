@@ -5,5 +5,17 @@
       "Microsoft.AspNetCore": "Warning"
     }
   },
-  "AllowedHosts": "*"
+  "AllowedHosts": "*",
+  "ConnectionStrings":
+  {
+    "Default": ""
+  },
+  "Caching": {
+    "ExpirationInMinutes": "5",
+    "SingleExpirationInMinutes": "10",
+    "Redis": {
+      "Configuration": "localhost:6379",
+      "InstanceName": "local"
+    }
+  }
 }
