@@ -17,4 +17,11 @@ public static class ControllerBaseExtension
 
         return controllerBase.Ok(response);
     }
+
+    public static NotFoundObjectResult SendNotFound(this ControllerBase controllerBase)
+    {
+        var response = new ApiResponse() { Message =  ApiResponseStatuses.NotFound };
+        
+        return controllerBase.NotFound(response);
+    }
 }

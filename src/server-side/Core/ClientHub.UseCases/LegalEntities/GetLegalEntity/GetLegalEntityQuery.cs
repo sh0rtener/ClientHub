@@ -4,13 +4,13 @@ using MediatR;
 
 namespace ClientHub.UseCases.LegalEntities.GetLegalEntity;
 
-public sealed class GetLegalEntityQuery : IRequest<LegalEntityDto>
+public sealed class GetLegalEntityQuery : IRequest<LegalEntityDto?>
 {
     public required int Id { get; init; }
 }
 
 public sealed class GetLegalEntityQueryHandler
-    : IRequestHandler<GetLegalEntityQuery, LegalEntityDto>
+    : IRequestHandler<GetLegalEntityQuery, LegalEntityDto?>
 {
     private readonly IMapper _mapper;
     private readonly ILegalEntityRepository _repository;
@@ -21,13 +21,13 @@ public sealed class GetLegalEntityQueryHandler
         _repository = repository;
     }
 
-    public async Task<LegalEntityDto> Handle(
+    public async Task<LegalEntityDto?> Handle(
         GetLegalEntityQuery request,
         CancellationToken cancellationToken
     )
     {
         var legalEntity = await _repository.Get(request.Id, cancellationToken);
-        var result = _mapper.Map<LegalEntityDto>(legalEntity);
+        var result = _mapper.Map<LegalEntityDto?>(legalEntity);
 
         return result;
     }
