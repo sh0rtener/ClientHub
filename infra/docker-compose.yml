@@ -32,6 +32,28 @@ services:
       dockerfile: src/server-side/Presenters/ClientHub.WebApi/Dockerfile
     env_file:
       - .env.example
+      
+  clienthub-webapi2:
+    image: clienthub-webapi2
+    hostname: clienthub-webapi2
+    container_name: clienthub-webapi2
+    restart: always
+    build:
+      context: ../
+      dockerfile: src/server-side/Presenters/ClientHub.WebApi/Dockerfile
+    env_file:
+      - .env.example
+      
+  clienthub-webapi3:
+    image: clienthub-webapi3
+    hostname: clienthub-webapi3
+    container_name: clienthub-webapi3
+    restart: always
+    build:
+      context: ../
+      dockerfile: src/server-side/Presenters/ClientHub.WebApi/Dockerfile
+    env_file:
+      - .env.example
     
   redis:
     image: redis:8-alpine
