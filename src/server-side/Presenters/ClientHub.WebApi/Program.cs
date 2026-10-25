@@ -14,6 +14,7 @@ builder.Services.AddSwagger();
 builder.Services.AddPersistense(builder.Configuration);
 builder.Services.AddUseCases();
 builder.Services.AddCaching(builder.Configuration);
+builder.Services.AddLogging();
 
 var app = builder.Build();
 

@@ -17,5 +17,15 @@
       "Configuration": "localhost:6379",
       "InstanceName": "local"
     }
-  }
+  },
+  "Serilog": {
+      "MinimumLevel": {
+        "Default": "Information"
+      },
+      "WriteTo": [
+        {
+          "Name": "Console"
+        }
+      ]
+    }
 }

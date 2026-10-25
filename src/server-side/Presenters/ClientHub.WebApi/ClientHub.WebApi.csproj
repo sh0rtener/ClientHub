@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\ClientHub.UseCases\ClientHub.UseCases.csproj" />
     <ProjectReference Include="..\..\Infra\ClientHub.Caching\ClientHub.Caching.csproj" />
+    <ProjectReference Include="..\..\Infra\ClientHub.Logging\ClientHub.Logging.csproj" />
     <ProjectReference Include="..\..\Infra\ClientHub.Persistense\ClientHub.Persistense.csproj" />
   </ItemGroup>
 
