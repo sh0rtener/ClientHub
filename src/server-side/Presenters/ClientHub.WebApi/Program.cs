@@ -3,6 +3,7 @@ using ClientHub.Persistense;
 using ClientHub.Persistense.EntityFramework;
 using ClientHub.UseCases;
 using ClientHub.WebApi;
+using ClientHub.WebApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,5 +30,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.MapControllers();
+
+app.UseMiddleware<EndpointHandlerMiddleware>();
 
 app.Run();
