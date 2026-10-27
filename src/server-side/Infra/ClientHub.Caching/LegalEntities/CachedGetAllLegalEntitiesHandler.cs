@@ -43,7 +43,7 @@ public sealed class CachedGetAllLegalEntitiesHandler
         {
             IEnumerable<ShortLegalEntityDto>? dtos = null;
             var cacheString = await _cache.GetStringAsync(
-                Constants.EmptyIndividualEntrepreneursFilter,
+                Constants.EmptyLegalEntityFilter,
                 cancellationToken
             );
 
@@ -55,7 +55,7 @@ public sealed class CachedGetAllLegalEntitiesHandler
                 dtos = await _inner.Handle(request, cancellationToken);
                 cacheString = JsonSerializer.Serialize(dtos);
                 await _cache.SetStringAsync(
-                    Constants.EmptyIndividualEntrepreneursFilter,
+                    Constants.EmptyLegalEntityFilter,
                     cacheString,
                     new DistributedCacheEntryOptions()
                     {
